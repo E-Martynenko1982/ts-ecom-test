@@ -1,0 +1,205 @@
+/* ========== Global Styles ========== */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Helvetica Neue", sans-serif;
+	line-height: 1.5;
+	color: #000000;
+	padding: 0;
+}
+
+.container {
+	width: 100%;
+	max-width: 375px;
+	margin: 0 auto;
+	padding: 40px 20px 44px;
+}
+
+.featured-products-description {
+	margin-bottom: 40px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 150%;
+}
+
+.featured-products h1 {
+	margin-bottom: 10px;
+	font-size: 32px;
+	font-weight: 800;
+}
+
+.products-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+}
+
+.product-card {
+	width: 157px;
+	min-height: 271px;
+	height: auto;
+	position: relative;
+
+	transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.image-wrapper {
+	width: 157px;
+	height: 199px;
+	position: relative;
+	overflow: hidden;
+	border-radius: 16px;
+	box-flex-group: #f7f8fb;
+}
+
+.image-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: opacity 0.3s ease;
+}
+
+.image-wrapper img.second {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+
+.image-wrapper:hover img.second {
+	opacity: 1;
+}
+
+.product-info {
+	margin-top: 10px;
+}
+
+.product-title {
+	font-size: 14px;
+	font-weight: 800;
+	margin-top: 10px;
+}
+
+.product-description p {
+	font-size: 12px;
+	font-weight: 400;
+	margin-bottom: 6px;
+	color: #000000;
+}
+
+.product-price {
+	font-size: 14px;
+	font-weight: 800;
+}
+
+.product-compare-price {
+	font-size: 14px;
+	color: #a3a3a3;
+	text-decoration: line-through;
+	margin-left: 8px;
+}
+
+/* ========== FAQ Section ========== */
+.faq-section {
+	max-width: 800px;
+	margin: 40px auto 0;
+}
+
+.faq-section h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.faq-item {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+
+.faq-question {
+	width: 100%;
+	text-align: left;
+	background: none;
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 1rem;
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.faq-question:hover {
+	background-color: #f9f9f9;
+}
+
+.icon {
+	transition: transform 0.3s ease;
+}
+
+.faq-answer {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+}
+
+.faq-answer p {
+	padding: 0 10px 10px 10px;
+	margin: 0;
+	font-size: 0.95rem;
+	line-height: 1.4;
+}
+
+/* Коли секція FAQ розкрита */
+.faq-item.open .faq-answer {
+	max-height: 200px; /* Достатньо місця для тексту, за потреби можна поставити більше */
+}
+
+.faq-item.open .icon {
+	transform: rotate(45deg); /* Іконка + перетворюється на хрестик */
+}
+
+@media (min-width: 376px) {
+	.container {
+		max-width: 1440px;
+		padding: 40px 60px;
+	}
+
+	.product-card {
+		max-width: 300px;
+		width: 100%;
+		max-height: 474px;
+		height: 100%;
+	}
+
+	.image-wrapper {
+		max-width: 300px;
+		width: 100%;
+		max-height: 377px;
+		height: 100%;
+	}
+
+	.products-container {
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 40px;
+	}
+
+	.featured-products h1 {
+		margin-bottom: 20px;
+		font-size: 40px;
+	}
+
+	.featured-products p {
+		font-size: 20px;
+		margin-bottom: 60px;
+	}
+}
