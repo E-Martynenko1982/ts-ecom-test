@@ -1,4 +1,3 @@
-
 const query = `
   {
     products(first: 10) {
@@ -36,8 +35,6 @@ const query = `
 
 const storefrontEndpoint = "https://tsodykteststore.myshopify.com/api/2023-01/graphql.json";
 const storefrontAccessToken = "7e174585a317d187255660745da44cc7";
-
-// Функція для отримання продуктів
 async function fetchProducts() {
   try {
     const response = await fetch(storefrontEndpoint, {
@@ -54,40 +51,24 @@ async function fetchProducts() {
     }
 
     const data = await response.json();
-
-    // console.log("API response:", data);
     return data.data.products.edges;
-
   } catch (error) {
     console.error("Помилка при отриманні продуктів:", error);
     return [];
   }
 }
-
-// ==================== END: GraphQL Запит до Shopify Storefront API ==================== //
-
-
-// ==================== START: Функція для відображення продуктів ==================== //
 function renderProducts(products) {
   const productsContainer = document.getElementById("productsContainer");
-
 
   products.forEach(productEdge => {
     const product = productEdge.node;
 
-    // Отримуємо необхідні дані
     const title = product.title || "No Title";
     const description = product.description || "No Description";
-    const images = product.images.edges; // масив з 2 картинок, якщо є
-
-
+    const images = product.images.edges;
 
     const firstImageUrl = images[0]?.node?.url;
     const secondImageUrl = images[1]?.node?.url;
-
-    console.log(firstImageUrl)
-
-
 
     const variant = product.variants.edges[0]?.node;
     const price = variant?.price?.amount;
@@ -95,21 +76,16 @@ function renderProducts(products) {
     const compareAtPrice = variant?.compareAtPrice?.amount;
     const compareAtCurrency = variant?.compareAtPrice?.currencyCode;
 
-
-
-    // Створюємо картку товару
     const productCard = document.createElement("div");
     productCard.classList.add("product-card");
 
     const imageWrapper = document.createElement("div");
     imageWrapper.classList.add("image-wrapper");
 
-    // Перша картинка
     const img1 = document.createElement("img");
     img1.src = firstImageUrl || "";
     img1.alt = title || "product image";
 
-    // Друга картинка (при ховері)
     const img2 = document.createElement("img");
     img2.src = secondImageUrl || firstImageUrl || "";
     img2.alt = title || "product image";
@@ -121,21 +97,16 @@ function renderProducts(products) {
     const productInfo = document.createElement("div");
     productInfo.classList.add("product-info");
 
-    // Заголовок
     const productTitle = document.createElement("h3");
     productTitle.classList.add("product-title");
     productTitle.textContent = title;
 
-    // Опис
     const productDesc = document.createElement("p");
     productDesc.classList.add("product-description");
     productDesc.textContent = description.length > 80
       ? description.slice(0, 80) + "..."
       : description;
 
-
-
-    // Ціна
     const priceEl = document.createElement("span");
     priceEl.classList.add("product-price");
     if (price && currency) {
@@ -144,7 +115,6 @@ function renderProducts(products) {
       priceEl.textContent = "N/A";
     }
 
-    // Compare at Price (стара ціна)
     const comparePriceEl = document.createElement("span");
     comparePriceEl.classList.add("product-compare-price");
     if (compareAtPrice && compareAtCurrency) {
@@ -153,51 +123,40 @@ function renderProducts(products) {
 
     productInfo.appendChild(productTitle);
     productInfo.appendChild(productDesc);
-    productInfo.appendChild(priceEl);
+
     if (compareAtPrice) {
       productInfo.appendChild(comparePriceEl);
     }
+    productInfo.appendChild(priceEl);
 
     productCard.appendChild(imageWrapper);
     productCard.appendChild(productInfo);
-
     productsContainer.appendChild(productCard);
   });
 }
-// ==================== END: Функція для відображення продуктів ==================== //
 
 
-// ==================== START: FAQ Логіка ==================== //
 function initFAQ() {
   const faqItems = document.querySelectorAll(".faq-item");
 
   faqItems.forEach(item => {
-    const questionBtn = item.querySelector(".faq-question");
-    questionBtn.addEventListener("click", () => {
-      // Якщо вже розкрите, приховаємо
+    const faqRow = item.querySelector(".faq-row");
+
+    faqRow.addEventListener("click", () => {
       if (item.classList.contains("open")) {
         item.classList.remove("open");
       } else {
-        // Закриємо всі інші, щоб відкритою була лише одна (необов'язково, залежить від вимог)
         faqItems.forEach(i => i.classList.remove("open"));
         item.classList.add("open");
       }
     });
   });
 }
-// ==================== END: FAQ Логіка ==================== //
 
-
-// ==================== START: Ініціалізація при завантаженні сторінки ==================== //
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1) Отримуємо продукти
   const products = await fetchProducts();
-
-  // 2) Рендеримо товари на сторінці
   renderProducts(products);
-
-  // 3) Ініціалізуємо FAQ
   initFAQ();
 });
-// ==================== END: Ініціалізація при завантаженні сторінки ==================== //
+
 
